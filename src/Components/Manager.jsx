@@ -2,6 +2,7 @@ import React, { useRef, useState,useEffect } from 'react'
 
 const Manager = () => {
    const ref = useRef();
+   const passwordRef = useRef();
    const [form, setform] = useState({site:"", username:"", password:""})
    const [passwordArray, setPasswordArray] = useState([]);
 useEffect(() => {
@@ -15,11 +16,14 @@ if(passwords){
 }, []);
 
 const showpassword=()=>{
+
   if(ref.current.src.includes("/public/icons/images.png")){
 ref.current.src ="/public/icons/eyeball-icon-png-eye-icon-1.png"
+passwordRef.current.type ="text"
   } 
   else{
 ref.current.src ="/public/icons/images.png"
+passwordRef.current.type ="password"
   }
 }
 const savePassword = ()=>{
@@ -52,7 +56,7 @@ setform({...form, [e.target.name]:e.target.value})
     <div className="flex gap-8 ">
         <input value={form.username} onChange={handlechange} placeholder='Enter Username' className="bg-white rounded-full border border-green-600 w-full p-3 py-1" type="text" name='username' />
         <div className='relative'>
-        <input value={form.password} onChange={handlechange} placeholder='Enter Password' className='bg-white rounded-full border border-green-600 w-full p-3 py-1' type="text" name='password' /> 
+        <input ref={passwordRef} value={form.password} onChange={handlechange} placeholder='Enter Password' className='bg-white rounded-full border border-green-600 w-full p-3 py-1' type="password" name='password' /> 
         <span className='absolute right-[3px] top-[4px] cursor-pointer' onClick={showpassword}>
        <img  ref={ref} className='p-1' width={26} src='/public/icons/eyeball-icon-png-eye-icon-1.png' alt=''/>
         </span>
@@ -80,9 +84,35 @@ setform({...form, [e.target.name]:e.target.value})
   <tbody className='bg-green-100'>
     {passwordArray.map((item, index)=>{
 return <tr key={index}>
-      <td className='text-center w-32 py-2'><a href="{item.site}" target='_blank'>{item.site}</a></td>
-      <td className='text-center w-32 py-2'>{item.username}</td>
-      <td className='text-center w-32 py-2'>{item.password}</td>
+      <td className='flex items-center justify-center text-center  py-2 border border-white'><a href="{item.site}" target='_blank'>{item.site}</a>
+      <div className='cursor-pointer size-5'>
+      <span className="material-symbols-outlined ">
+content_copy
+</span>
+</div>
+      </td>
+      <td className='text-center border border-white py-2'> 
+        <div className='flex justify-center items-center'>
+          <span>
+        {item.username}
+        </span>
+        <div className='cursor-pointer size-5'>
+      <span className="material-symbols-outlined ">
+content_copy
+</span>
+</div>
+        </div>
+         </td>
+      <td className='text-center border border-white py-2'>
+        <div className='flex justify-center items-center'><span>{item.password}</span>
+        <div className='cursor-pointer size-5'>
+      <span className="material-symbols-outlined ">
+content_copy
+</span>
+</div>
+        </div>
+        
+        </td>
     </tr>
    })}
   </tbody>
