@@ -48,7 +48,7 @@ const Manager = () => {
     }
   }
   const savePassword = () => {
-
+if(form.site.length >3 && form.username.length>3 && form.password.length>3){
     const newPasswords = [...passwordArray, { ...form, id: uuidv4()}];
     setPasswordArray(newPasswords);
     localStorage.setItem("passwords", JSON.stringify(newPasswords));
@@ -65,7 +65,22 @@ const Manager = () => {
       theme: "dark",
 
     });
+  
   }
+
+else{
+ toast("Error: password not saved", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+}
+}
   const deletePassword = (id) => {
       toast("Password deleted successfully", {
       position: "top-right",
@@ -113,11 +128,11 @@ setPasswordArray(passwordArray.filter((item)=>item.id!==id))
         </h1>
         <p className='text-green-900 text-center text-lg'>Your own Password Manager</p>
         <div className='text-black flex flex-col p-4 gap-6'>
-          <input value={form.site} onChange={handlechange} placeholder='Enter Website Url' className='bg-white rounded-full border border-green-600 w-full p-3 py-1' type="" name='site' id='' />
-          <div className="flex gap-8 ">
-            <input value={form.username} onChange={handlechange} placeholder='Enter Username' className="bg-white rounded-full border border-green-600 w-full p-3 py-1" type="text" name='username' />
+          <input value={form.site} onChange={handlechange} placeholder='Enter Website Url' className='bg-white rounded-full border border-green-600 w-full p-3 py-1' type="" name='site' id='site' />
+          <div className="flex gap-8">
+            <input value={form.username} onChange={handlechange} placeholder='Enter Username' className="bg-white rounded-full border border-green-600 w-full p-3 py-1" type="text" name='username' id='username' />
             <div className='relative'>
-              <input ref={passwordRef} value={form.password} onChange={handlechange} placeholder='Enter Password' className='bg-white rounded-full border border-green-600 w-full p-3 py-1' type="password" name='password' />
+              <input ref={passwordRef} value={form.password} onChange={handlechange} placeholder='Enter Password' className='bg-white rounded-full border border-green-600 w-full p-3 py-1' type="password" name='password' id='password' />
               <span className='absolute right-[3px] top-[4px] cursor-pointer' onClick={showpassword}>
                 <img ref={ref} className='p-1' width={26} src='/public/icons/eyeball-icon-png-eye-icon-1.png' alt='' />
               </span>
@@ -134,7 +149,7 @@ setPasswordArray(passwordArray.filter((item)=>item.id!==id))
         <div className="passwords">
           <h2 className='text-2xl font-bold py-2'>Your Passwords</h2>
           {passwordArray.length === 0 && <div> No Passwords to show</div>}
-          {passwordArray.length != 0 && <table className="table-auto w-full rounded-md overflow-hidden">
+          {passwordArray.length != 0 && <table className="table-auto w-full rounded-md overflow-hidden mb-10">
             <thead className='bg-green-800 text-white '>
               <tr>
                 <th>Site</th>
